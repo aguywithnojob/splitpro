@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import Login from './components/account/login';
+import {Layout } from 'antd';
+import Header from './components/misc/header';
+import Footer  from './components/misc/footer';
+import Navigation from './components/router';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout  className='layout' style={{backgroundColor: 'white'}}>
+        <Header />
+        <Navigation />
+      {/* <Login /> */}
+      {/* <Activity title="Activity"/> */}
+      {/* <Friends title="Friends"/> */}
+      <Footer />
+      </Layout>
     </div>
   );
 }
