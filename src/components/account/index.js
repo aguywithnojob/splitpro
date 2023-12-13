@@ -1,40 +1,74 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { Avatar, Card } from 'antd';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { Col } from 'react-bootstrap';
-const data = [
-    {
-      userName: `Badal`,
-      email: "badal@gmail.com",
-      mobile: "1234567890"
-    }
-  ];
+import { fetchAccountDetail } from '../service/account-service';
+import {logout} from '../service/auth-service';
+import Loader from '../misc/loader';
 
   function Account(props) {
+    const [UserData, setUserData] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+    // useeffect to all fetchaccountdetails
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const data = await fetchAccountDetail(props.userId);
+            if (data){
+              setUserData(data);
+              setIsLoading(false);
+            }
+            else{
+              throw new Error('Fetching account details failed');
+            }
+          } catch (error) {
+            console.error('Fetching account details failed:', error);
+          }
+        };
+        fetchData();
+      }, []);
+      const handleLogout = async () => {
+        try {
+          let response = await logout();
+          if (response){
+            sessionStorage.removeItem('userEmail');
+            sessionStorage.removeItem('user_id');
+          }
+          // window.location.reload();
+        } catch (error) {
+          console.error('Logout failed:', error);
+        }
+      };
   return (
+    isLoading ? <Loader /> :
     <Container >
         <Row>
             <h3>{props.title}</h3>
         </Row>
         <Row className='d-flex justify-content-center my-3'>
-            <Card title={data[0].userName} bordered={false} style={{ width: 500}}>
+            <Card title={!UserData ? "Loading..." : UserData.name} bordered={false} style={{ width: 500}}>
                 <Row>
                     <Col>
-                        <Avatar style={{width: '100px', height: '100px'}} src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=1`} />
+                        <Avatar style={{width: '100px', height: '100px'}} src={UserData.avatar? UserData.avatar : ""} />
                     </Col>
                     <Col>
-                        Email: <h4 className='pruple-clr'>{data[0].email}</h4>
-                        Mobile: <h5 style={{color:'grey'}}>{data[0].mobile}</h5>
+                        Email: <h6 className='pruple-clr'>{!UserData ? "Loading..." : UserData.email}</h6>
+                        Mobile: <h6 className='pruple-clr'>{!UserData ? "Loading..." : UserData.mobile}</h6>
+                    </Col>
+                    <Col>
                     </Col>
                 </Row>
                 
+                <Row>
+                    <Col className='d-flex justify-content-center'>
+                        <button className="btn btn-orange-clr" onClick={()=>handleLogout()}>Logout</button>
+                    </Col>
+                </Row>
             </Card>
         </Row>
        
-        <Row>
-            {/* logout */}
-        </Row>  
+          
     </Container>
   )
 }

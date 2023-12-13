@@ -23,6 +23,18 @@
 .orange-clr{
     color:#F67240;
 }
+.btn-orange-clr{
+    background-color: #F67240 !important;
+    color: white !important;
+}
+.btn-green-clr{
+    background-color: #1CC29F !important;
+    color: white !important;
+}
+.btn-pruple-clr{
+    background-color: #8f4ED3 !important;
+    color: white !important;
+}
 .ant-modal-title{
     display: flex;
     justify-content: center;

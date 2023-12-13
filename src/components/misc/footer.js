@@ -40,7 +40,7 @@ function Footer() {
               </Link>
             </li>
             <li className='mx-2'>
-              <Link style={{ textDecoration: 'none', color:"#8f4ED3"}} to="/account" >
+              <Link style={{ textDecoration: 'none', color:"#8f4ED3"}} to="/" >
               <div className="footer-icon">
                 <IconContext.Provider value={{ style: { fontSize: '20px' }, className: "global-class-name" }}>
                   <FaCircleUser />

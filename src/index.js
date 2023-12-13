@@ -7,18 +7,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import ThemeProvider from 'react-bootstrap/ThemeProvider'
 import { BrowserRouter } from 'react-router-dom';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <ThemeProvider
-        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
-        minBreakpoint="xxs"
-      >
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
-  </React.StrictMode>
+        <ThemeProvider
+            breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+            minBreakpoint="xxs"
+          >
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

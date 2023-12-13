@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar, List } from 'antd';
 import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import NewExpense from '../misc/newExpense';
 
@@ -23,6 +24,15 @@ const data = [
   ];
 
   function Friends(props) {
+    const SettleAmount = (user, amount) => {
+      console.log('called settled', user,amount)
+        for(let i=0; i<data.length; i++){
+            if(data[i].userName === user){
+                data[i].balance = ""
+                data[i].type = "Settled"
+            }
+        }
+    }
   return (
     <Container>
         <Row>
@@ -39,14 +49,24 @@ const data = [
             renderItem={(item, index) => (
             <List.Item>
                 <List.Item.Meta
-                avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-                title={<span style={{fontSize: '20px'}}>{item.userName}</span>}
+                avatar={<Avatar style={{width: '50px', height: '50px'}} src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
+                title={<span style={{fontSize: '16px'}}>{item.userName}</span>}
                 // description = {<span style={{color: 'green'}}>{item.content}</span>}
                 />
                 <div >
                         {
-                        item.type === "you owe" ?( <><span className='orange-clr' style={{display: 'flex', justifyContent: 'flex-end'}}>{item.type}</span>  <p className='orange-clr'>{item.balance}</p></>)
-                        : (<><span className='green-clr' style={{display: 'flex', justifyContent: 'flex-end'}}>{item.type}</span>  <p className='green-clr' >{item.balance}</p></>)
+                        item.type === "you owe" ?(
+                            <>
+                              <span className='orange-clr' >{item.type}</span>
+                              <p className='orange-clr' >{item.balance}</p> 
+                              <button className='btn-orange-clr btn' onClick={()=>SettleAmount(item.userName, item.balance)} >Settle</button>
+                            </>
+                          ) : (
+                              <>
+                                <span className='green-clr' >{item.type}</span> 
+                                <p className='green-clr' >{item.balance}</p>
+                              </>
+                          )
                         }
                     
                 </div>

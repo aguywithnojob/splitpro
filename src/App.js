@@ -4,13 +4,37 @@ import {Layout } from 'antd';
 import Header from './components/misc/header';
 import Footer  from './components/misc/footer';
 import Navigation from './components/router';
+import {useEffect, useState} from 'react';
 
+function getToken() {
+  return sessionStorage.getItem('userEmail');
+  // const email = sessionStorage.getItem('userEmail');
+  // const user_id =  sessionStorage.getItem('user_id');
+  // return {email,user_id};
+}
 function App() {
+  const [token, setToken] = useState(getToken());
+  const [userId,setuserId] = useState();
+  useEffect(()=>{
+    setToken(getToken());
+  },[]);
+  // useEffect(() => {
+  //   const {email,user_id} = getToken();
+  //   console.log('email ==? ', email, 'user_id ==? ', user_id);
+  //   if(email && user_id){
+  //     setToken(email);
+  //     setuserId(user_id);
+  //   }
+  // }, []);
+
+  if(!token) {
+    return <Login setToken={setToken} setuserId = {setuserId} />
+  }
   return (
     <div className="App">
       <Layout  className='layout' style={{backgroundColor: 'white'}}>
         <Header />
-        <Navigation />
+        <Navigation  userId={userId}  />
       {/* <Login /> */}
       {/* <Activity title="Activity"/> */}
       {/* <Friends title="Friends"/> */}
