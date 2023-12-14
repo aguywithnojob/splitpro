@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import NewExpense from '../misc/newExpense';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {fetchActivity} from '../service/account-service';
+import {fetchGroupActivity} from '../service/account-service';
 import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
 import { GiExpense } from "react-icons/gi";
@@ -14,9 +14,6 @@ import { GiExpense } from "react-icons/gi";
   function GroupExpense(props) {
     const { groupId } = useParams();
     const location = useLocation();
-    console.log(location);
-    const { title } = location.state || {};
-    console.log('group===>', title )
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +21,6 @@ import { GiExpense } from "react-icons/gi";
     
     const loadMoreData = () => {
       if (loading) {
-        console.log('loffff')
         return;
       }
       setLoading(true);
@@ -33,7 +29,7 @@ import { GiExpense } from "react-icons/gi";
 
     const fetchData = async () => {
       try {
-        const data = await fetchActivity();
+        const data = await fetchGroupActivity(groupId);
         if (data){
           setData(data);
           setIsLoading(false);
@@ -64,7 +60,7 @@ import { GiExpense } from "react-icons/gi";
       nodata ? <NoData /> :
     <Container>
         <Row>
-            <h3>{props.title}</h3>
+            <h3>{data[0].group.toUpperCase()}</h3>
         </Row>
         <InfiniteScroll
         dataLength={data.length}

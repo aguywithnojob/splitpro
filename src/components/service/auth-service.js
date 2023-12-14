@@ -15,11 +15,11 @@ export async function login(email, password) {
             return response?.data;
         }
         else{
-            return false
+            return response?.data
         }
     } catch (error) {
-        console.error('Login failed:', error);
-        return false
+        console.error('Login failed:', error?.response?.data);
+        return error?.response?.data
     }
 }
 

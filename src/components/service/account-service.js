@@ -34,9 +34,27 @@ export async function fetchGroups(userId) {
   }
 }
 
+// expense of for a user in activity tab
 export async function fetchActivity() {
   try {
         const response = await axios.get(`${baseUrl}/activity/`, { headers: {
+          'Content-Type': 'x-www-form-urlencoded',
+        }, });
+        if (response?.status === 200) {
+          return response?.data
+        }
+        else{
+          return []
+        }
+    } catch (error) {
+        console.error('Fetching account details failed:', error);
+  }
+}
+
+// expense of specific group
+export async function fetchGroupActivity(group_id) {
+  try {
+        const response = await axios.get(`${baseUrl}/activity/${group_id}`, { headers: {
           'Content-Type': 'x-www-form-urlencoded',
         }, });
         if (response?.status === 200) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Button, Form, Input } from 'antd';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {login} from '../service/auth-service'
 
 function Login({ setToken, setuserId }) {
+    const [isLoggedIn, setIsLoggedIn] = useState();
     const onFinish = async (values) => {
         const { email, password } = values;
         const data = await login(email, password);
@@ -15,13 +16,13 @@ function Login({ setToken, setuserId }) {
             setuserId(data.user_id)
             localStorage.setItem('userEmail', JSON.stringify(email));
             localStorage.setItem('user_id', JSON.stringify(data.user_id));
+            setIsLoggedIn(true);
             console.log('login Success')
-        }
-        else{
-            alert('Login Failed')
+        }else{
+            setIsLoggedIn(false);
         }
       };
-      
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
       };
@@ -88,6 +89,13 @@ function Login({ setToken, setuserId }) {
                 </Button>
                 </Form.Item>
             </Form>
+            {
+            isLoggedIn === false ? 
+                <div className='d-flex justify-content-center'>
+                    <span className='orange-clr'>Invalid Email or Password</span>
+                </div>
+             :<></>}
+            
         </Container>
 )};
 export default Login;
