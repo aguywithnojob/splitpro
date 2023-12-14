@@ -13,8 +13,8 @@ function Login({ setToken, setuserId }) {
         if (data.user_id){
             setToken(email);
             setuserId(data.user_id)
-            sessionStorage.setItem('userEmail', JSON.stringify(email));
-            // sessionStorage.setItem('user_id', JSON.stringify(data.user_id));
+            localStorage.setItem('userEmail', JSON.stringify(email));
+            localStorage.setItem('user_id', JSON.stringify(data.user_id));
             console.log('login Success')
         }
         else{

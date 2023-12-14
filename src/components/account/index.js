@@ -6,10 +6,12 @@ import { Col } from 'react-bootstrap';
 import { fetchAccountDetail } from '../service/account-service';
 import {logout} from '../service/auth-service';
 import Loader from '../misc/loader';
+import NoData from '../misc/nodata';
 
   function Account(props) {
     const [UserData, setUserData] = useState([])
     const [isLoading, setIsLoading] = useState(true);
+    const [nodata, setNodata] = useState(false);
     // useeffect to all fetchaccountdetails
       useEffect(() => {
         const fetchData = async () => {
@@ -20,10 +22,14 @@ import Loader from '../misc/loader';
               setIsLoading(false);
             }
             else{
+              setNodata(true);
+              setIsLoading(false);
               throw new Error('Fetching account details failed');
             }
           } catch (error) {
             console.error('Fetching account details failed:', error);
+            setNodata(true);
+              setIsLoading(false);
           }
         };
         fetchData();
@@ -32,8 +38,8 @@ import Loader from '../misc/loader';
         try {
           let response = await logout();
           if (response){
-            sessionStorage.removeItem('userEmail');
-            sessionStorage.removeItem('user_id');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('user_id');
           }
           // window.location.reload();
         } catch (error) {
@@ -41,7 +47,9 @@ import Loader from '../misc/loader';
         }
       };
   return (
-    isLoading ? <Loader /> :
+    isLoading ? <Loader /> 
+    : 
+      nodata ? <NoData /> :
     <Container >
         <Row>
             <h3>{props.title}</h3>

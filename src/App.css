@@ -15,12 +15,16 @@
     justify-content: center;
 }
 .green-clr{
+    /* #0c3c32 */
+    /* #1CC29F */
     color: #1CC29F;
 }
 .pruple-clr{
     color: #8f4ED3;
 }
 .orange-clr{
+    /* #A6002F */
+    /* #F67240 */
     color:#F67240;
 }
 .btn-orange-clr{
@@ -59,3 +63,17 @@ ul{
 }
 /* color green #1CC29F */
 /* color pruple #8f4ED3 */
+
+
+.ant-list-item-meta-avatar{
+
+    align-self: center;
+}
+
+.ant-spin-dot-item {
+    background-color: #8f4ED3 !important;
+  }
+
+a {
+    text-decoration: none !important;
+}

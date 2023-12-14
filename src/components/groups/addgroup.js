@@ -63,7 +63,7 @@ const Useroptions = [
         >
           </FloatButton>
         </div>
-        <Modal width={1000} title="New Expense" open={isModalOpen} onCancel={handleCancel} centered cancelButtonProps={{ style: { display: 'none' } }} okButtonProps={{ style: { display: 'none' } }}>
+        <Modal width={1000} title="New Group" open={isModalOpen} onCancel={handleCancel} centered cancelButtonProps={{ style: { display: 'none' } }} okButtonProps={{ style: { display: 'none' } }}>
           <Container >
               <Form
                 name="expense"
@@ -132,7 +132,7 @@ const Useroptions = [
                 </Row>
                 <Form.Item  className='d-flex justify-content-center'>
                   <Button style={{background: '#1CC29F', color: 'white'}} type="primary" htmlType="add">
-                    Add
+                    Add Group
                   </Button>
                 </Form.Item>
               </Form>

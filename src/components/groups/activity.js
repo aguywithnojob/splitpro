@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams, useLocation } from 'react-router-dom';
 import { Avatar, List, Divider, Skeleton  } from 'antd';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +10,13 @@ import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
 import { GiExpense } from "react-icons/gi";
 
-  function Activity(props) {
+
+  function GroupExpense(props) {
+    const { groupId } = useParams();
+    const location = useLocation();
+    console.log(location);
+    const { title } = location.state || {};
+    console.log('group===>', title )
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -100,4 +107,4 @@ import { GiExpense } from "react-icons/gi";
   )
 }
 
-export default Activity
+export default GroupExpense
