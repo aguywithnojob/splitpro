@@ -6,18 +6,22 @@ import NewExpense from '../misc/newExpense';
 import { fetchFriends } from '../service/account-service';
 import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
+import {fetchGroupOptions} from '../service/meta-options';
 
 function Friends(props) {
-
   const [data, setUserData] = useState([])
   const [isLoading, setIsLoading] = useState(true);
   const [nodata, setNodata] = useState(false);
+  const [Groupoptions, setGroupoptions] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchFriends();
-        console.log('datatatatat==>', data)
+        
+        const Groupdata = await fetchGroupOptions(props.userId)
+        setGroupoptions(Groupdata)
+        
         if (data){
           setUserData(data);
           setIsLoading(false);
@@ -34,6 +38,7 @@ function Friends(props) {
       }
     };
     fetchData();
+    
   }, []);
 
   const SettleAmount = (user, amount) => {
@@ -48,7 +53,14 @@ function Friends(props) {
   return (
     isLoading ? <Loader /> 
     : 
-      nodata ? <NoData /> :
+      nodata ? 
+          <>
+            <NoData /> 
+            <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
+                <NewExpense screen="Friends" userId={props.userId} Groupoptions={Groupoptions}  />
+            </Row>
+          </>
+      :
     <Container>
         <Row>
             <h3>{props.title}</h3>
@@ -88,9 +100,9 @@ function Friends(props) {
             </List.Item>
             )}
         /> 
-        <Row>
-            <NewExpense />
-        </Row>  
+        <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
+            <NewExpense screen="Friends" userId={props.userId} Groupoptions={Groupoptions} />
+        </Row> 
     </Container>
   )
 }
