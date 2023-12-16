@@ -63,7 +63,11 @@ import {fetchGroupOptions} from '../service/meta-options';
               <>
                 <NoData /> 
                 <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-                    <NewExpense screen="Activity" userId={props.userId} Groupoptions={Groupoptions}  />
+                    <NewExpense 
+                      screen = "Activity" 
+                      userId = {props.userId} 
+                      Groupoptions = {Groupoptions}  
+                    />
                 </Row>
               </>
       :

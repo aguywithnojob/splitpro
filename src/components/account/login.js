@@ -17,14 +17,14 @@ function Login({ setToken, setuserId }) {
             localStorage.setItem('userEmail', JSON.stringify(email));
             localStorage.setItem('user_id', JSON.stringify(data.user_id));
             setIsLoggedIn(true);
-            console.log('login Success')
+            
         }else{
             setIsLoggedIn(false);
         }
       };
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
+        
       };
 
     const ValidateEmail = (_, value) => {

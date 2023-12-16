@@ -17,7 +17,7 @@ function App() {
   
   useEffect(() => {
     const {email,user_id} = getToken();
-    console.log('email ==? ', email, 'user_id ==? ', user_id);
+    
     if(email && user_id){
       setToken(email);
       setuserId(user_id);
