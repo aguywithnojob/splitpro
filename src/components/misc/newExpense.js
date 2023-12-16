@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, Modal, InputNumber, Form, Input, Select, FloatButton } from 'antd';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { IconContext } from "react-icons";
 import { FaPlus } from "react-icons/fa";
+import {fetchUserOptions} from '../service/meta-options';
+
 const onChange = (value) => {
   console.log('changed', value);
   
@@ -14,27 +16,22 @@ const handleChange = (value) => {
   console.log(`Selected: ${value}`);
 };
 
-const Useroptions = [
-        {
-          label: 'Gautam',
-          value: 'Gautam',
-        },
-        {
-          label: 'Badal',
-          value: 'Badal',
-        },
-        {
-          label: 'Shubham',
-          value: 'Shubham'
-        }
-      ]
 
- function NewExpense() {
+ function NewExpense(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [size, setSize] = useState('middle');
-    
+    const Groupoptions = props.Groupoptions;
+    const [Useroptions, setUseroptions] = useState([]);
+    const [form] = Form.useForm();
+    const [initalSplitOn, setInitalSplitOn] = useState([]);
+    console.log('New expense props', props)
+
     const onFinish = (values) => {
+      if (values.Amount > 10000){
+        alert('Are you sure you want to add INR '+values.Amount);
+      }
       console.log('Success:', values);
+      form.resetFields()
       handleCancel();
     };
     
@@ -48,6 +45,25 @@ const Useroptions = [
     const handleCancel = () => {
       setIsModalOpen(false);
     };
+
+    const handleGroupChange = async (value) => {
+      // userOptions filled based on groupId
+      setUseroptions(await fetchUserOptions(value))
+    };
+    const PopuplateUserOptions = async (grouId) => {
+      // userOptions filled based on groupId
+      setUseroptions(await fetchUserOptions(grouId))
+    };
+    useEffect(() => {    
+      // fetch group activity
+      if (props.groupId){
+        PopuplateUserOptions(props.groupId)
+      }
+      else{
+        PopuplateUserOptions(Groupoptions[0].value)
+      }
+    }, []);
+
     return (
       <>
         <div className='d-flex justify-content-end'>
@@ -84,7 +100,20 @@ const Useroptions = [
                 <Form.Item
                   label="Amount"
                   name="Amount"
-                  rules={[{ required: true, message: 'Enter Amount' }]}
+                  rules={[
+                          { 
+                            required: true, message: 'Enter Amount' 
+                          },
+                          {
+                            validator: (_, value) => {
+                              if (value < 0) {
+                                return Promise.reject(new Error('Amount cannot be negative'));
+                              }
+                              return Promise.resolve();
+                            },
+                          }
+                        ]}
+                  
                 >
                   <InputNumber style={{width: '100%'}}
                     formatter={(value) => `INR ${value.replace(/\INR\s?|(,*)/g, '')}`}
@@ -95,11 +124,29 @@ const Useroptions = [
                 </Col>
                 </Row>
                 <Row>
+                  { (props.screen == "Friends" ||props.screen == "Activity") ? 
+                    <Col>
+                        <Form.Item
+                          label="Group"
+                          name="Group"
+                          initialValue={Groupoptions ? Groupoptions[0].value : null}
+                        >
+                          <Select
+                              size={size}
+                              onChange={handleGroupChange}
+                              style={{
+                                width: '100%',
+                              }}
+                              options={Groupoptions}
+                            />
+                        </Form.Item>
+                      </Col> : <></>
+                  }
                   <Col>
                     <Form.Item
                       label="Paid By"
                       name="PaidBy"
-                      initialValue={Useroptions[0].value}
+                      initialValue={initalSplitOn}
                     >
                       <Select
                           size={size}
@@ -115,7 +162,7 @@ const Useroptions = [
                     <Form.Item
                       label="Split On"
                       name="SplitOn"
-                      initialValue={Useroptions[0].value}
+                      // initialValue={Useroptions.length > 0 ? Useroptions[0].value : null}
                     >
                       <Select
                           mode="tags"

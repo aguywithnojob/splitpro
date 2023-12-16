@@ -38,7 +38,7 @@ function Login({ setToken, setuserId }) {
     }   
 
     return (
-        <Container style={{marginTop:'33vh'}}>
+        <Container style={{marginTop:'30vh'}}>
             <Row>
                 <Col>
                     <h5 style={{textAlign:'center'}}>SpliteWise Pro</h5>

@@ -5,6 +5,7 @@ import Friends from '../friends';
 import Groups  from '../groups';
 import Account from '../account';
 import GroupExpense from '../groups/activity';
+import PageNotFound from '../misc/pagenotfound';
 function Navigation(props) {
   return (
           <Routes>
@@ -18,7 +19,7 @@ function Navigation(props) {
             </Route>
             <Route path="/" element={<Account title="Account" userId={props.userId} />}>
             </Route>
-            
+            <Route  path="*" element={<PageNotFound />} />
             {/* <Route path="/login" element={<Login setToken={props.setToken} setuserId = {props.setuserId}/>}>
             </Route> */}
         </Routes>

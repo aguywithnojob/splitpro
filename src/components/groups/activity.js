@@ -57,7 +57,14 @@ import { GiExpense } from "react-icons/gi";
   return (
     isLoading ? <Loader /> 
     : 
-      nodata ? <NoData /> :
+      nodata ? 
+          <>    
+            <NoData /> 
+            <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
+                <NewExpense groupId={groupId} userId={props.userId} />
+            </Row>  
+            </>
+      :
     <Container>
         <Row>
             <h3>{data[0].group.toUpperCase()}</h3>
@@ -97,7 +104,7 @@ import { GiExpense } from "react-icons/gi";
             /> 
         </InfiniteScroll>
         <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-            <NewExpense />
+            <NewExpense groupId={groupId} userId={props.userId} />
         </Row>  
     </Container>
   )
