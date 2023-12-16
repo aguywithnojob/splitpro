@@ -8,16 +8,17 @@ import {fetchActivity} from '../service/account-service';
 import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
 import { GiExpense } from "react-icons/gi";
+import {fetchGroupOptions} from '../service/meta-options';
 
   function Activity(props) {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [nodata, setNodata] = useState(false);
+    const [Groupoptions, setGroupoptions] = useState([]);
     
     const loadMoreData = () => {
       if (loading) {
-        console.log('loffff')
         return;
       }
       setLoading(true);
@@ -48,13 +49,24 @@ import { GiExpense } from "react-icons/gi";
 
     useEffect(() => {    
       loadMoreData();
+      // fetch options for dropdown
+      // fetchGroupOptions(props.userId).then(data => setGroupoptions(data))
+      fetchGroupOptions(props.userId).then(data => setGroupoptions(data))
+      
     }, []);
     
   
   return (
     isLoading ? <Loader /> 
     : 
-      nodata ? <NoData /> :
+      nodata ? 
+              <>
+                <NoData /> 
+                <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
+                    <NewExpense screen="Activity" userId={props.userId} Groupoptions={Groupoptions}  />
+                </Row>
+              </>
+      :
     <Container>
         <Row>
             <h3>{props.title}</h3>
@@ -94,7 +106,7 @@ import { GiExpense } from "react-icons/gi";
             /> 
         </InfiniteScroll>
         <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-            <NewExpense />
+            <NewExpense screen="Activity" userId={props.userId} Groupoptions={Groupoptions} />
         </Row>  
     </Container>
   )

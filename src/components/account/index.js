@@ -64,8 +64,7 @@ import NoData from '../misc/nodata';
                         Email: <h6 className='pruple-clr'>{!UserData ? "Loading..." : UserData.email}</h6>
                         Mobile: <h6 className='pruple-clr'>{!UserData ? "Loading..." : UserData.mobile}</h6>
                     </Col>
-                    <Col>
-                    </Col>
+                    
                 </Row>
                 
                 <Row>
