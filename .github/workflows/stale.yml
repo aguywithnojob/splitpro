@@ -1,32 +1,4 @@
-# This workflow warns and then closes issues and PRs that have had no activity for a specified amount of time.
-#
-# You can adjust the behavior by modifying this file.
-# For more information, see:
-# https://github.com/actions/stale
-# name: Mark stale issues and pull requests
-
-# on:
-#   schedule:
-#   - cron: '15 12 * * *'
-
-# jobs:
-#   stale:
-
-#     runs-on: ubuntu-latest
-#     permissions:
-#       issues: write
-#       pull-requests: write
-
-#     steps:
-#     - uses: actions/stale@v5
-#       with:
-#         repo-token: ${{ secrets.GITHUB_TOKEN }}
-#         stale-issue-message: 'Stale issue message'
-#         stale-pr-message: 'Stale pull request message'
-#         stale-issue-label: 'no-issue-activity'
-#         stale-pr-label: 'no-pr-activity'
-
-name: Auto Merge Dev to Main
+name: Create PR from Dev to Main
 
 on:
   push:
@@ -34,20 +6,22 @@ on:
       - dev
 
 jobs:
-  merge:
+  create_pr:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Merge dev into main
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          
-          git checkout main
-          git merge --no-ff --no-edit dev
-          
-          git push
-
+      
+      - name: extract git commit data
+        uses: rlespinasse/git-commit-data-action@v1.x
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: Automatically created PR from Dev to Main
+          branch: dev
+          base: main
+          body: |
+            This PR was automatically created by a GitHub Actions workflow.
+          token: ${{ secrets.GITHUB_TOKEN }}
