@@ -20,8 +20,6 @@ function Navigation(props) {
             <Route path="/" element={<Account title="Account" userId={props.userId} />}>
             </Route>
             <Route  path="*" element={<PageNotFound />} />
-            {/* <Route path="/login" element={<Login setToken={props.setToken} setuserId = {props.setuserId}/>}>
-            </Route> */}
         </Routes>
   )
 }
