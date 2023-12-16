@@ -18,7 +18,7 @@ function Groups(props) {
     const fetchData = async () => {
       try {
         const data = await fetchGroups(props.userId);
-        console.log('datatatatat==>', data)
+        
         if (data){
           setUserData(data);
           setIsLoading(false);

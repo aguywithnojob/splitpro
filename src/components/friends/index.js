@@ -42,7 +42,7 @@ function Friends(props) {
   }, []);
 
   const SettleAmount = (user, amount) => {
-    console.log('called settled', user,amount)
+    
       for(let i=0; i<data.length; i++){
           if(data[i].userName === user){
               data[i].balance = ""

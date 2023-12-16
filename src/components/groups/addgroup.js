@@ -6,12 +6,12 @@ import Col from 'react-bootstrap/Col';
 import { IconContext } from "react-icons";
 import { FaPlus } from "react-icons/fa";
 const onChange = (value) => {
-  console.log('changed', value);
+  
   
 };
 
 const handleChange = (value) => {
-  console.log(`Selected: ${value}`);
+  
 };
 
 const Useroptions = [
@@ -34,12 +34,12 @@ const Useroptions = [
     const [size, setSize] = useState('middle');
     
     const onFinish = (values) => {
-      console.log('Success:', values);
+      
       handleCancel();
     };
     
     const onFinishFailed = (errorInfo) => {
-      console.log('Failed:', errorInfo);
+      
     };
     const showModal = () => {
       setIsModalOpen(true);

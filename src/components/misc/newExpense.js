@@ -6,14 +6,15 @@ import Col from 'react-bootstrap/Col';
 import { IconContext } from "react-icons";
 import { FaPlus } from "react-icons/fa";
 import {fetchUserOptions} from '../service/meta-options';
+import { addNewExpense } from '../service/addExpense';
 
 const onChange = (value) => {
-  console.log('changed', value);
+  
   
 };
 
 const handleChange = (value) => {
-  console.log(`Selected: ${value}`);
+  
 };
 
 
@@ -24,19 +25,36 @@ const handleChange = (value) => {
     const [Useroptions, setUseroptions] = useState([]);
     const [form] = Form.useForm();
     const [initalSplitOn, setInitalSplitOn] = useState([]);
-    console.log('New expense props', props)
-
     const onFinish = (values) => {
       if (values.Amount > 10000){
-        alert('Are you sure you want to add INR '+values.Amount);
+        let proceed = window.confirm('Are you sure you want to add INR '+values.Amount);
+        if (!proceed){
+          return
+        }
       }
-      console.log('Success:', values);
-      form.resetFields()
-      handleCancel();
+      
+
+      let api_call_status = false
+      const callAddExpense = async () => {
+        return await addNewExpense(values)
+        
+      }
+      // hitting the api to add new expense
+      api_call_status = callAddExpense(values)
+      
+      if (api_call_status){
+        form.resetFields()
+        handleCancel();
+        console.log("Expense added successfully")
+        // update activityState
+      }
+      else{
+        console.log("Something went wrong while adding expense")
+      }
     };
     
     const onFinishFailed = (errorInfo) => {
-      console.log('Failed:', errorInfo);
+      
     };
     const showModal = () => {
       setIsModalOpen(true);

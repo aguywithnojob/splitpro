@@ -99,3 +99,23 @@ export async function fetchFriends() {
         console.error('Fetching account details failed:', error);
   }
 }
+
+export async function fetchFriendsByUser(groupId) {
+  if (groupId === undefined || groupId === null || groupId === '') {
+    groupId = 0
+  }
+  
+  try {
+    const response = await axios.get(`${baseUrl}/metadata/friends/${groupId}/`, { headers: {
+      'Content-Type': 'x-www-form-urlencoded',
+    }, });
+    if (response?.status === 200) {
+      return response?.data
+    }
+    else{
+      return {}
+    }
+  } catch (error) {
+    console.error('Fetching account details failed:', error);
+  }
+}
