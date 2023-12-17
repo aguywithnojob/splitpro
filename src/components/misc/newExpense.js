@@ -7,7 +7,7 @@ import { IconContext } from "react-icons";
 import { FaPlus } from "react-icons/fa";
 import {fetchUserOptions} from '../service/meta-options';
 import { addNewExpense } from '../service/addExpense';
-
+import {notify}  from '../misc/toast';
 const onChange = (value) => {
   
   
@@ -33,23 +33,20 @@ const handleChange = (value) => {
         }
       }
       
-
-      let api_call_status = false
       const callAddExpense = async () => {
         const newExpense = await addNewExpense(values)
-        console.log('neww 11==>', newExpense)
         if (newExpense){
           form.resetFields()
-          console.log('props>>>>>>', props)
           if (props.setData){
             props.setData([newExpense, ...props.expenseData])
           }
           handleCancel();
-          console.log("Expense added successfully")
-          // update activityState
+          // toast success
+          notify("success","Expense added successfully")
         }
         else{
           console.log("Something went wrong while adding expense")
+          notify("error","Something went wrong while adding expense")
         }
       }
       // hitting the api to add new expense

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PropTypes from 'prop-types';
 import {login} from '../service/auth-service'
-
+import {notify } from '../misc/toast';
 function Login({ setToken, setuserId }) {
     const [isLoggedIn, setIsLoggedIn] = useState();
     const onFinish = async (values) => {
@@ -20,11 +20,12 @@ function Login({ setToken, setuserId }) {
             
         }else{
             setIsLoggedIn(false);
+            notify("error", "Login Failed")
         }
       };
 
     const onFinishFailed = (errorInfo) => {
-        
+        notify("error", "Login Failed")
       };
 
     const ValidateEmail = (_, value) => {

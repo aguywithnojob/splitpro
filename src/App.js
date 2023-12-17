@@ -5,6 +5,7 @@ import Header from './components/misc/header';
 import Footer  from './components/misc/footer';
 import Navigation from './components/router';
 import {useEffect, useState} from 'react';
+import ToastPopup from './components/misc/toast';
 
 function getToken() {
   const email = localStorage.getItem('userEmail');
@@ -28,6 +29,8 @@ function App() {
     return <Login setToken={setToken} setuserId = {setuserId} />
   }
   return (
+    <>
+    <ToastPopup />
     <div className="App">
       <Layout  className='layout' style={{backgroundColor: 'white'}}>
         <Header />
@@ -38,6 +41,7 @@ function App() {
       <Footer />
       </Layout>
     </div>
+    </>
   );
 }
 
