@@ -41,7 +41,9 @@ const handleChange = (value) => {
         if (newExpense){
           form.resetFields()
           console.log('props>>>>>>', props)
-          props.setData([newExpense, ...props.expenseData])
+          if (props.setData){
+            props.setData([newExpense, ...props.expenseData])
+          }
           handleCancel();
           console.log("Expense added successfully")
           // update activityState
