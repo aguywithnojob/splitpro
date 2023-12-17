@@ -36,21 +36,23 @@ const handleChange = (value) => {
 
       let api_call_status = false
       const callAddExpense = async () => {
-        return await addNewExpense(values)
-        
+        const newExpense = await addNewExpense(values)
+        console.log('neww 11==>', newExpense)
+        if (newExpense){
+          form.resetFields()
+          console.log('props>>>>>>', props)
+          props.setData([newExpense, ...props.expenseData])
+          handleCancel();
+          console.log("Expense added successfully")
+          // update activityState
+        }
+        else{
+          console.log("Something went wrong while adding expense")
+        }
       }
       // hitting the api to add new expense
-      api_call_status = callAddExpense(values)
+      callAddExpense(values)
       
-      if (api_call_status){
-        form.resetFields()
-        handleCancel();
-        console.log("Expense added successfully")
-        // update activityState
-      }
-      else{
-        console.log("Something went wrong while adding expense")
-      }
     };
     
     const onFinishFailed = (errorInfo) => {
