@@ -66,7 +66,9 @@ import {fetchGroupOptions} from '../service/meta-options';
                     <NewExpense 
                       screen = "Activity" 
                       userId = {props.userId} 
-                      Groupoptions = {Groupoptions}  
+                      Groupoptions = {Groupoptions}
+                      setData = {setData}
+                      expenseData = {data}
                     />
                 </Row>
               </>
@@ -98,8 +100,8 @@ import {fetchGroupOptions} from '../service/meta-options';
                 <List.Item>
                     <List.Item.Meta
                     avatar={<Avatar style={{backgroundColor: '#A6002F', height: '40px', width: '40px', alignItems: 'center'}} icon={<GiExpense style={{verticalAlign:'bottom'}} />}/>}
-                    title={<span>{item.paid_by.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.toUpperCase()}</b>"</span>}
-                    description = {item.share <0 ? <span className='orange-clr'>You will pay INR {0-item.share}</span> : <span className='green-clr'>You will get INR {item.share}</span>}
+                    title={<span>{item.paid_by.name.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.name.toUpperCase()}</b>"</span>}
+                    description = {item.share < 0 ? <span className='orange-clr'>You will pay INR {0-item.share}</span> : <span className='green-clr'>You will get INR {item.share}</span>}
                     />
                     <div className='d-flex flex-column align-items-end'>
                       <span className='orange-clr'>{item.timestamp.split(",")[0]}</span>
@@ -110,7 +112,12 @@ import {fetchGroupOptions} from '../service/meta-options';
             /> 
         </InfiniteScroll>
         <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-            <NewExpense screen="Activity" userId={props.userId} Groupoptions={Groupoptions} />
+            <NewExpense screen="Activity" 
+                  userId={props.userId} 
+                  Groupoptions={Groupoptions} 
+                  setData = {setData} 
+                  expenseData = {data} 
+                />
         </Row>  
     </Container>
   )

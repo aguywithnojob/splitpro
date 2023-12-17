@@ -67,7 +67,7 @@ import { GiExpense } from "react-icons/gi";
       :
     <Container>
         <Row>
-            <h3>{data[0].group.toUpperCase()}</h3>
+            <h3>{data[0].group.name.toUpperCase()}</h3>
         </Row>
         <InfiniteScroll
         dataLength={data.length}
@@ -92,7 +92,7 @@ import { GiExpense } from "react-icons/gi";
                 <List.Item>
                     <List.Item.Meta
                     avatar={<Avatar style={{backgroundColor: '#A6002F', height: '40px', width: '40px', alignItems: 'center'}} icon={<GiExpense style={{verticalAlign:'bottom'}} />}/>}
-                    title={<span>{item.paid_by.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.toUpperCase()}</b>"</span>}
+                    title={<span>{item.paid_by.name.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.name.toUpperCase()}</b>"</span>}
                     description = {item.share <0 ? <span className='orange-clr'>You will pay INR {0-item.share}</span> : <span className='green-clr'>You will get INR {item.share}</span>}
                     />
                     <div className='d-flex flex-column align-items-end'>

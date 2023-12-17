@@ -16,8 +16,8 @@ export async function addNewExpense(data) {
         const response = await axios.post(`${baseUrl}/addexpense/`, post_data, { headers: {
           'Content-Type': 'application/json',
         }, });
-        if (response?.status === 200) {
-          return true
+        if (response?.status === 201) {
+          return response?.data
         }
         else{
           return false

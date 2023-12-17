@@ -101,7 +101,7 @@ function Friends(props) {
             )}
         /> 
         <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-            <NewExpense screen="Friends" userId={props.userId} Groupoptions={Groupoptions} />
+            <NewExpense screen="Friends" userId={props.userId} Groupoptions={Groupoptions}  />
         </Row> 
     </Container>
   )
