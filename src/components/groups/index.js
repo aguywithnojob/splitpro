@@ -62,7 +62,7 @@ function Groups(props) {
                           avatar={<Avatar shape="square" className="group-avatar" style={{width: '80px', height: '80px'}} icon={<BiSolidGroup style={{fontSize: '70px'}} />} />}
                           title={<span style={{fontSize: '20px'}}>{item.name}</span>}
                           description = {<>
-                                { (item.user_debts < 0) ?<h6 className='orange-clr'>You will pay <span >INR{(item.user_debts) * -1}</span></h6> : <h6 className='green-clr'>You will get <span>INR{(item.user_debts)}</span></h6>}
+                                { (item.user_debts < 0) ?<h6 className='orange-clr'>You will pay <span >INR{(item.user_debts) * -1}</span></h6> : (item.user_debts)>0 ? <h6 className='green-clr'>You will get <span>INR{(item.user_debts)}</span></h6> : <></>}
                                 {item.friends_debts.map((debt, pos) => (
                                   <div className='d-flex flex-column justify-content-end'>
                                    { (debt[0].paid_by.id == props.userId ) ? <span key={pos} > You will pay {debt[1].paid_to.name} <span className='orange-clr'>INR{debt[2]} </span> </span> : <></> }
