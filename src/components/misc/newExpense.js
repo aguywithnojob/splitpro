@@ -79,7 +79,10 @@ const handleChange = (value) => {
         PopuplateUserOptions(props.groupId)
       }
       else{
-        PopuplateUserOptions(Groupoptions[0].value)
+        if (Groupoptions.length > 0){
+          PopuplateUserOptions(Groupoptions[0].value)
+        }
+        
       }
     }, []);
 
@@ -148,7 +151,7 @@ const handleChange = (value) => {
                         <Form.Item
                           label="Group"
                           name="Group"
-                          initialValue={Groupoptions ? Groupoptions[0].value : null}
+                          initialValue={Groupoptions.length > 0 ? Groupoptions[0].value : null}
                         >
                           <Select
                               size={size}
