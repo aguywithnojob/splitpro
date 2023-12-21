@@ -46,7 +46,11 @@ const handleChange = (value) => {
         
         if (newExpense){
           form.resetFields()
-          props.updateGroupActivity();
+          if (props.updateActivity){
+            props.updateActivity();
+          } else if (props.updateGroupActivity){
+            props.updateGroupActivity();
+          }
           handleCancel();
           notify("success","Expense added successfully")
         } else {

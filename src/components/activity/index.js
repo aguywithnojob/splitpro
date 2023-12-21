@@ -119,8 +119,7 @@ import {fetchGroupOptions} from '../service/meta-options';
             <NewExpense screen="Activity" 
                   userId={props.userId} 
                   Groupoptions={Groupoptions} 
-                  setData = {setData} 
-                  expenseData = {data} 
+                  updateActivity={fetchData}
                 />
         </Row>  
     </Container>
