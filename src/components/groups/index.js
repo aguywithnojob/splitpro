@@ -18,7 +18,7 @@ function Groups(props) {
     const fetchData = async () => {
       try {
         const data = await fetchGroups(props.userId);
-        
+
         if (data){
           setUserData(data);
           setIsLoading(false);
@@ -56,19 +56,21 @@ function Groups(props) {
                   itemLayout="horizontal"
                   dataSource={data}
                   renderItem={(item, index) => (
-                    <Link to={{ pathname: `/groups/${item.id}`, state: item.name }}>
+                    <Link to={{pathname: `/groups/${item.id}`}} state= {{'name':item.name,'user_debts':item.user_debts}} >
                       <List.Item key={item.id}>
                           <List.Item.Meta key={item.id}
                           avatar={<Avatar shape="square" className="group-avatar" style={{width: '80px', height: '80px'}} icon={<BiSolidGroup style={{fontSize: '70px'}} />} />}
                           title={<span style={{fontSize: '20px'}}>{item.name}</span>}
-                          description = {
-                                item.customers.map((friend, pos) => (
+                          description = {<>
+                                { (item.user_debts < 0) ?<h6 className='orange-clr'>You will pay <span >INR{(item.user_debts) * -1}</span></h6> : <h6 className='green-clr'>You will get <span>INR{(item.user_debts)}</span></h6>}
+                                {item.friends_debts.map((debt, pos) => (
                                   <div className='d-flex flex-column justify-content-end'>
-                                    {/* <h6 key={pos}>{friend} owes INR {item.settlementAmount[pos]}</h6> */}
-                                    <h6 key={pos}>{friend} owes INR</h6>
+                                   { (debt[0].paid_by.id == props.userId ) ? <span key={pos} > You will pay {debt[1].paid_to.name} <span className='orange-clr'>INR{debt[2]} </span> </span> : <></> }
+                                   { (debt[1].paid_to.id == props.userId ) ? <span key={pos}> {debt[0].paid_by.name} will pay you <span className='green-clr'>INR{debt[2]} </span></span> : <></> }
+                                   {/* { (props.userId != debt[0].paid_by.id && props.userId == debt[1].paid_to.id) ? <h6 key={pos}>{debt[0].paid_by.name} will pay you INR {debt[2]}</h6> : <></> } */}
                                   </div>
-                                ))                        
-                          }
+                                ))}                        
+                                </>}
                           />
                           
                       </List.Item>
