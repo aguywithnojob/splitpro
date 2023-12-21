@@ -14,6 +14,8 @@ import { GiExpense } from "react-icons/gi";
   function GroupExpense(props) {
     const { groupId } = useParams();
     const location = useLocation();
+    const { state } = location;
+    const {name, user_debts} = state;
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -67,7 +69,13 @@ import { GiExpense } from "react-icons/gi";
       :
     <Container>
         <Row>
-            <h3>{data[0].group.name.toUpperCase()}</h3>
+            <h3>{name.toUpperCase()}</h3>
+        </Row>
+        <Row>
+            <div className="d-flex justify-content-end">
+            <h6>Overall, you owe INR 10,000</h6>
+            {/* { (user_debts < 0) ? <h6>Overall, you owe <span className='orange-clr'>INR {(user_debts) * -1}</span></h6> :<h6>Overall, you are owed <span className='green-clr'>INR {(user_debts)}</span></h6>} */}
+            </div>
         </Row>
         <InfiniteScroll
         dataLength={data.length}
