@@ -41,19 +41,16 @@ const handleChange = (value) => {
           group : values.Group ? values.Group : props.groupId,
           split_on : values.SplitOn
         }
+        
         const newExpense = await addNewExpense(post_data);
+        
         if (newExpense){
           form.resetFields()
-          if (props.setData){
-            props.setData([newExpense, ...props.expenseData])
-          }
+          props.updateGroupActivity();
           handleCancel();
-          // toast success
           notify("success","Expense added successfully")
-        }
-        else{
-          console.log("Something went wrong while adding expense")
-          notify("error","Something went wrong while adding expense")
+        } else {
+            notify("error","Something went wrong while adding expense")
         }
       }
       // hitting the api to add new expense
@@ -112,6 +109,7 @@ const handleChange = (value) => {
           <Container >
               <Form
                 name="expense"
+                form={form}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
               >
