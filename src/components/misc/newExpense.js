@@ -34,23 +34,31 @@ const handleChange = (value) => {
       }
       
       const callAddExpense = async () => {
-        const newExpense = await addNewExpense(values)
+        const post_data = {
+          item : values.Item,
+          amount : values.Amount,
+          paid_by : values.PaidBy,
+          group : values.Group ? values.Group : props.groupId,
+          split_on : values.SplitOn
+        }
+        
+        const newExpense = await addNewExpense(post_data);
+        
         if (newExpense){
           form.resetFields()
-          if (props.setData){
-            props.setData([newExpense, ...props.expenseData])
+          if (props.updateActivity){
+            props.updateActivity();
+          } else if (props.updateGroupActivity){
+            props.updateGroupActivity();
           }
           handleCancel();
-          // toast success
           notify("success","Expense added successfully")
-        }
-        else{
-          console.log("Something went wrong while adding expense")
-          notify("error","Something went wrong while adding expense")
+        } else {
+            notify("error","Something went wrong while adding expense")
         }
       }
       // hitting the api to add new expense
-      callAddExpense(values)
+      callAddExpense()
       
     };
     
@@ -105,6 +113,7 @@ const handleChange = (value) => {
           <Container >
               <Form
                 name="expense"
+                form={form}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
               >

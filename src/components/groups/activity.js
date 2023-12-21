@@ -103,7 +103,7 @@ import { GiExpense } from "react-icons/gi";
             /> 
         </InfiniteScroll>
         <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-            <NewExpense groupId={groupId} userId={props.userId} />
+            <NewExpense groupId={groupId} userId={props.userId} updateGroupActivity={fetchData} />
         </Row>  
     </Container>
   )
