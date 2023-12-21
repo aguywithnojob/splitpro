@@ -34,7 +34,14 @@ const handleChange = (value) => {
       }
       
       const callAddExpense = async () => {
-        const newExpense = await addNewExpense(values)
+        const post_data = {
+          item : values.Item,
+          amount : values.Amount,
+          paid_by : values.PaidBy,
+          group : values.Group ? values.Group : props.groupId,
+          split_on : values.SplitOn
+        }
+        const newExpense = await addNewExpense(post_data);
         if (newExpense){
           form.resetFields()
           if (props.setData){
@@ -50,7 +57,7 @@ const handleChange = (value) => {
         }
       }
       // hitting the api to add new expense
-      callAddExpense(values)
+      callAddExpense()
       
     };
     
