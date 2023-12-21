@@ -28,6 +28,9 @@ import {fetchGroupOptions} from '../service/meta-options';
     const fetchData = async () => {
       try {
         const data = await fetchActivity();
+        const Groupdata = await fetchGroupOptions(props.userId)
+        setGroupoptions(Groupdata)
+
         if (data){
           setData(data);
           setIsLoading(false);
@@ -37,7 +40,7 @@ import {fetchGroupOptions} from '../service/meta-options';
           setNodata(true);
           setIsLoading(false);
           setLoading(false);
-          throw new Error('Fetching account details failed');
+          // throw new Error('Fetching account details failed');
         }
       } catch (error) {
         console.error('Fetching account details failed:', error);
@@ -51,7 +54,9 @@ import {fetchGroupOptions} from '../service/meta-options';
       loadMoreData();
       // fetch options for dropdown
       // fetchGroupOptions(props.userId).then(data => setGroupoptions(data))
-      fetchGroupOptions(props.userId).then(data => setGroupoptions(data))
+      // console.log('heeheeh')
+      // fetchGroupOptions(props.userId).then(data => setGroupoptions(data))
+      // console.log('heeheeh2222')
       
     }, []);
     
@@ -97,17 +102,16 @@ import {fetchGroupOptions} from '../service/meta-options';
                 itemLayout="horizontal"
                 dataSource={data}
                 renderItem={(item, index) => (
-                <List.Item>
-                    <List.Item.Meta
-                    avatar={<Avatar style={{backgroundColor: '#A6002F', height: '40px', width: '40px', alignItems: 'center'}} icon={<GiExpense style={{verticalAlign:'bottom'}} />}/>}
-                    title={<span>{item.paid_by.name.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.name.toUpperCase()}</b>"</span>}
-                    description = {item.share < 0 ? <span className='orange-clr'>You will pay INR {0-item.share}</span> : <span className='green-clr'>You will get INR {item.share}</span>}
-                    />
-                    <div className='d-flex flex-column align-items-end'>
-                      <span className='orange-clr'>{item.timestamp.split(",")[0]}</span>
-                      <span className='orange-clr'>{item.timestamp.split(",")[1]}</span>
-                    </div>
-                </List.Item>
+                  <List.Item>
+                      <List.Item.Meta
+                      avatar={<Avatar style={{backgroundColor: '#A6002F', height: '40px', width: '40px', alignItems: 'center'}} icon={<GiExpense style={{verticalAlign:'bottom'}} />}/>}
+                      title={<span>{item.paid_by.name.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.name.toUpperCase()}</b>"</span>}
+                      description = {<div className='d-flex flex-column'>  {item.share <0 ? <span className='orange-clr'>You will pay INR {0-item.share}</span> : <span className='green-clr'>You will get INR {item.share}</span>} <i className=''>{item.timestamp}</i> </div>}
+                      />
+                      <div className='d-flex flex-column align-items-end'>
+                        <span className='orange-clr'>INR {item.amount}</span>
+                      </div>
+                  </List.Item>
                 )}
             /> 
         </InfiniteScroll>
