@@ -32,6 +32,7 @@ const Useroptions = [
  function AddGroup() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [size, setSize] = useState('middle');
+    const [form] = Form.useForm();
     
     const onFinish = (values) => {
       
@@ -69,6 +70,7 @@ const Useroptions = [
                 name="expense"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
+                form={form}
               >
                 <Row>
                   <Col>
