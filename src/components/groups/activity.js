@@ -5,10 +5,11 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import NewExpense from '../misc/newExpense';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {fetchGroupActivity} from '../service/account-service';
 import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
 import { GiExpense } from "react-icons/gi";
+import {fetchGroupActivity} from '../service/account-service';
+import {overallBalance} from '../service/overallbalance-service';
 
 
   function GroupExpense(props) {
@@ -20,6 +21,7 @@ import { GiExpense } from "react-icons/gi";
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [nodata, setNodata] = useState(false);
+    const [balance, setBalance] = useState();
     
     const loadMoreData = () => {
       if (loading) {
@@ -32,6 +34,8 @@ import { GiExpense } from "react-icons/gi";
     const fetchData = async () => {
       try {
         const data = await fetchGroupActivity(groupId);
+        const response = await overallBalance(groupId);
+        setBalance(response.overall_balance);
         if (data){
           setData(data);
           setIsLoading(false);
@@ -73,8 +77,9 @@ import { GiExpense } from "react-icons/gi";
         </Row>
         <Row>
             <div className="d-flex justify-content-end">
-            <h6>Overall, you owe INR 10,000</h6>
-            {/* { (user_debts < 0) ? <h6>Overall, you owe <span className='orange-clr'>INR {(user_debts) * -1}</span></h6> :<h6>Overall, you are owed <span className='green-clr'>INR {(user_debts)}</span></h6>} */}
+                {(balance > 0) ? <h6>Overall, you are owed <span className='green-clr'>&#8377;{balance}</span></h6> :
+                  (balance < 0) ? <h6>Overall, you owe <span className='orange-clr'>&#8377;{(balance) * -1}</span></h6>:<></>
+                }
             </div>
         </Row>
         <InfiniteScroll
@@ -101,10 +106,10 @@ import { GiExpense } from "react-icons/gi";
                     <List.Item.Meta
                     avatar={<Avatar style={{backgroundColor: '#A6002F', height: '40px', width: '40px', alignItems: 'center'}} icon={<GiExpense style={{verticalAlign:'bottom'}} />}/>}
                     title={<span>{item.paid_by.name.toUpperCase()} added "<b>{item.item.toUpperCase()}</b>" in "<b>{item.group.name.toUpperCase()}</b>"</span>}
-                    description = {<div className='d-flex flex-column'>  {item.share <0 ? <span className='orange-clr'>You will pay INR {0-item.share}</span> : <span className='green-clr'>You will get INR {item.share}</span>} <i className=''>{item.timestamp}</i> </div>}
+                    description = {<div className='d-flex flex-column'>  {item.share <0 ? <span className='orange-clr'>You will pay &#8377;{0-item.share}</span> : <span className='green-clr'>You will get &#8377;{item.share}</span>} <i className=''>{item.timestamp}</i> </div>}
                     />
                     <div className='d-flex flex-column align-items-end'>
-                      <span className='orange-clr'>INR {item.amount}</span>
+                      <span className='orange-clr'>&#8377;{item.amount}</span>
                     </div>
                 </List.Item>
                 )}

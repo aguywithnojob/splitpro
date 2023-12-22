@@ -89,8 +89,8 @@ const Useroptions = [
                   rules={[{ required: true, message: 'Enter Amount' }]}
                 >
                   <InputNumber style={{width: '100%'}}
-                    formatter={(value) => `INR ${value.replace(/\INR\s?|(,*)/g, '')}`}
-                    parser={(value) => value.replace(/\INR\s?|(,*)/g, '')}
+                    formatter={(value) => `&#8377;${value.replace(/\&#8377;\s?|(,*)/g, '')}`}
+                    parser={(value) => value.replace(/\&#8377;\s?|(,*)/g, '')}
                     onChange={onChange}
                   />
                 </Form.Item>

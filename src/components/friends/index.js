@@ -7,12 +7,14 @@ import { fetchFriends } from '../service/account-service';
 import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
 import {fetchGroupOptions} from '../service/meta-options';
+import {overallBalance} from '../service/overallbalance-service';
 
 function Friends(props) {
   const [data, setUserData] = useState([])
   const [isLoading, setIsLoading] = useState(true);
   const [nodata, setNodata] = useState(false);
   const [Groupoptions, setGroupoptions] = useState([]);
+  const [balance, setBalance] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +23,8 @@ function Friends(props) {
         
         const Groupdata = await fetchGroupOptions(props.userId)
         setGroupoptions(Groupdata)
-        
+        const response = await overallBalance();
+        setBalance(response.overall_balance);
         if (data){
           setUserData(data);
           setIsLoading(false);
@@ -67,7 +70,9 @@ function Friends(props) {
         </Row>
         <Row>
             <div className="d-flex justify-content-end">
-                <h6>Overall, you are owed <span className='green-clr'>INR 10,000</span></h6>
+                {(balance > 0) ? <h6>Overall, you are owed <span className='green-clr'>&#8377;{balance}</span></h6> :
+                  (balance < 0) ? <h6>Overall, you owe <span className='orange-clr'>&#8377;{(balance) * -1}</span></h6>:<></>
+                }
             </div>
         </Row>
         <List

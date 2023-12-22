@@ -27,7 +27,7 @@ const handleChange = (value) => {
     const [initalSplitOn, setInitalSplitOn] = useState([]);
     const onFinish = (values) => {
       if (values.Amount > 10000){
-        let proceed = window.confirm('Are you sure you want to add INR '+values.Amount);
+        let proceed = window.confirm('Are you sure you want to add &#8377;'+values.Amount);
         if (!proceed){
           return
         }
@@ -147,8 +147,8 @@ const handleChange = (value) => {
                   
                 >
                   <InputNumber style={{width: '100%'}}
-                    formatter={(value) => `INR ${value.replace(/\INR\s?|(,*)/g, '')}`}
-                    parser={(value) => value.replace(/\INR\s?|(,*)/g, '')}
+                    formatter={(value) => `&#8377;${value.replace(/\&#8377;\s?|(,*)/g, '')}`}
+                    parser={(value) => value.replace(/\&#8377;\s?|(,*)/g, '')}
                     onChange={onChange}
                   />
                 </Form.Item>
