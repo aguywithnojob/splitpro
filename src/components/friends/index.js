@@ -20,7 +20,7 @@ function Friends(props) {
     const fetchData = async () => {
       try {
         const data = await fetchFriends();
-        
+        console.log('datat friend',data)
         const Groupdata = await fetchGroupOptions(props.userId)
         setGroupoptions(Groupdata)
         const response = await overallBalance();
@@ -45,13 +45,13 @@ function Friends(props) {
   }, []);
 
   const SettleAmount = (user, amount) => {
-    
-      for(let i=0; i<data.length; i++){
-          if(data[i].userName === user){
-              data[i].balance = ""
-              data[i].type = "Settled"
-          }
-      }
+    console.log(user, amount)
+      // for(let i=0; i<data.length; i++){
+      //     if(data[i].userName === user){
+      //         data[i].balance = ""
+      //         data[i].type = "Settled"
+      //     }
+      // }
   }
   return (
     isLoading ? <Loader /> 
@@ -81,23 +81,33 @@ function Friends(props) {
             renderItem={(item, index) => (
             <List.Item>
                 <List.Item.Meta
-                avatar={<Avatar style={{width: '50px', height: '50px'}} src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
+                avatar={<Avatar style={{width: '50px', height: '50px'}} src={item.avatar} />}
                 title={<span style={{fontSize: '16px'}}>{item.name[0].toUpperCase()+item.name.slice(1)}</span>}
                 // description = {<span style={{color: 'green'}}>{item.content}</span>}
                 />
-                <div >
+                <div style={{width:'10%'}}>
                       {
-                      item.type === "you owe" ?(
-                          <>
-                            <span className='orange-clr' >{item.type}</span>
-                            <p className='orange-clr' >{item.balance}</p> 
-                            <button className='btn-orange-clr btn' onClick={()=>SettleAmount(item.userName, item.balance)} >Settle</button>
-                          </>
-                        ) : (
-                            <>
-                              <span className='green-clr' >{item.type}</span> 
-                              <p className='green-clr' >{item.balance}</p>
-                            </>
+                      (item.balance < 0) ?(
+                          <div className='d-flex flex-column align-items-end'>
+                            <div className=''>
+                              <span className='orange-clr' >You pay</span>
+                              <p className='orange-clr' >&#8377;{item.balance * -1}</p> 
+                            </div>
+                            <button className='btn-orange-clr' style={{'border': 'none','height': '10%','alignSelf': 'end'}} onClick={()=>SettleAmount(item.name, item.balance)} >Settle</button>
+                          </div>
+                        ) 
+                        : (item.balance > 0) ?
+                        
+                        (
+                          <div className='d-flex flex-column align-items-end'>
+                              <span className='green-clr' >You get</span> 
+                              <span className='green-clr' >&#8377;{item.balance}</span>
+                            </div>
+                        ) :(
+                            <div className='d-flex justify-content-end'>
+                              <span style={{color: 'grey'}}>Settled</span> 
+                              {/* <p className='green-clr' >{item.balance}</p> */}
+                            </div>
                         )
                       }
                   

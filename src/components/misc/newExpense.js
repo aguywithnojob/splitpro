@@ -147,8 +147,8 @@ const handleChange = (value) => {
                   
                 >
                   <InputNumber style={{width: '100%'}}
-                    formatter={(value) => `&#8377;${value.replace(/\&#8377;\s?|(,*)/g, '')}`}
-                    parser={(value) => value.replace(/\&#8377;\s?|(,*)/g, '')}
+                    formatter={(value) => `INR ${value.replace(/\INR\s?|(,*)/g, '')}`}
+                    parser={(value) => value.replace(/\INR\s?|(,*)/g, '')}
                     onChange={onChange}
                   />
                 </Form.Item>
