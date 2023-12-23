@@ -32,6 +32,9 @@ const handleChange = (value) => {
           return
         }
       }
+
+      console.table(form)
+
       
       const callAddExpense = async () => {
         const post_data = {
@@ -41,7 +44,6 @@ const handleChange = (value) => {
           group : values.Group ? values.Group : props.groupId,
           split_on : values.SplitOn
         }
-        
         const newExpense = await addNewExpense(post_data);
         
         if (newExpense){
