@@ -88,7 +88,8 @@ function Friends(props) {
         <Row>
             <div className="d-flex justify-content-end">
                 {(balance > 0) ? <h6>Overall, you are owed <span className='green-clr'>&#8377;{balance}</span></h6> :
-                  (balance < 0) ? <h6>Overall, you owe <span className='orange-clr'>&#8377;{(balance) * -1}</span></h6>:<></>
+                  (balance < 0) ? <h6>Overall, you owe <span className='orange-clr'>&#8377;{(balance) * -1}</span></h6>:
+                  <h6 style={{color:'grey'}}>All settled</h6>
                 }
             </div>
         </Row>
