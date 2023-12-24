@@ -187,7 +187,7 @@ const handleChange = (value) => {
     useEffect(() => {    
       loadMoreData();
       if (groupId){
-        PopuplateUserOptions(props.groupId)
+        PopuplateUserOptions(groupId)
       }
     }, []);
     
