@@ -59,6 +59,10 @@ const handleChange = (value) => {
       }
       // hitting the api to add new expense
       callAddExpense()
+
+      if (props.handleFriendsUpdate){
+        props.handleFriendsUpdate()
+      }
       
     };
     

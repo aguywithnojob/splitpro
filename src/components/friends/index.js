@@ -17,31 +17,32 @@ function Friends(props) {
   const [nodata, setNodata] = useState(false);
   const [Groupoptions, setGroupoptions] = useState([]);
   const [balance, setBalance] = useState();
+  const fetchData = async () => {
+    try {
+      const data = await fetchFriends();
+      console.log('datat friend',data)
+      const Groupdata = await fetchGroupOptions(props.userId)
+      setGroupoptions(Groupdata)
+      const response = await overallBalance();
+      setBalance(response.overall_balance);
+      if (data){
+        setUserData(data);
+        setIsLoading(false);
+      }
+      else{
+        // throw new Error('Fetching account details failed');
+        setNodata(true);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Fetching account details failed:', error);
+        setNodata(true);
+        setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchFriends();
-        console.log('datat friend',data)
-        const Groupdata = await fetchGroupOptions(props.userId)
-        setGroupoptions(Groupdata)
-        const response = await overallBalance();
-        setBalance(response.overall_balance);
-        if (data){
-          setUserData(data);
-          setIsLoading(false);
-        }
-        else{
-          // throw new Error('Fetching account details failed');
-          setNodata(true);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error('Fetching account details failed:', error);
-          setNodata(true);
-          setIsLoading(false);
-      }
-    };
+   
     fetchData();
     
   }, []);
@@ -134,7 +135,7 @@ function Friends(props) {
             )}
         /> 
         <Row className='my-4' style={{zIndex: '2000000', position:'fixed', right:'230px', bottom: '80px'}}>
-            <NewExpense screen="Friends" userId={props.userId} Groupoptions={Groupoptions}  />
+            <NewExpense screen="Friends" userId={props.userId} Groupoptions={Groupoptions} handleFriendsUpdate={fetchData}  />
         </Row> 
     </Container>
   )
