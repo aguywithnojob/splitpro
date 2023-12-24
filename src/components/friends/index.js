@@ -58,6 +58,7 @@ function Friends(props) {
         if(data){
           notify("success","All settled!!")
           // call fetch data api again
+          fetchData();
         }
         else{
           notify("error","Something went wrong! Please try again")
