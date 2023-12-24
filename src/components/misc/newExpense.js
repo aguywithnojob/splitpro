@@ -33,8 +33,6 @@ const handleChange = (value) => {
         }
       }
 
-      console.table(form)
-
       
       const callAddExpense = async () => {
         const post_data = {

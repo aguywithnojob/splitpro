@@ -119,3 +119,20 @@ export async function fetchFriendsByUser(groupId) {
     console.error('Fetching account details failed:', error);
   }
 }
+
+
+export async function settleFriend(data) {
+  try {
+    const response = await axios.post(`${baseUrl}/settlement/create`, data=data,  { headers: {
+      'Content-Type': 'application/json',
+    }, });
+    if (response?.status === 201) {
+      return response?.data
+    }
+    else{
+      return false
+    }
+  } catch (error) {
+    console.error('Fetching account details failed:', error);
+  }
+}
