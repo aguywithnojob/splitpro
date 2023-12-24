@@ -8,6 +8,8 @@ import Loader from '../misc/loader';
 import NoData from '../misc/nodata';
 import {fetchGroupOptions} from '../service/meta-options';
 import {overallBalance} from '../service/overallbalance-service';
+import {settleFriend} from '../service/account-service'
+import { notify } from '../misc/toast';
 
 function Friends(props) {
   const [data, setUserData] = useState([])
@@ -44,8 +46,23 @@ function Friends(props) {
     
   }, []);
 
-  const SettleAmount = (user, amount) => {
-    console.log(user, amount)
+  const SettleAmount = async (friend_id,friend_name, amount) => {
+    if (window.confirm('Settle amount INR'+(amount * -1)+' to '+friend_name)) {
+        const payload = {
+                          friend_id:friend_id, 
+                          amount:(amount * -1)
+                        }
+        const data = await settleFriend(payload)
+        console.log('data after ae ==>', data)
+        if(data){
+          notify("success","All settled!!")
+          // call fetch data api again
+        }
+        else{
+          notify("error","Something went wrong! Please try again")
+        }
+    }
+   
       // for(let i=0; i<data.length; i++){
       //     if(data[i].userName === user){
       //         data[i].balance = ""
@@ -93,7 +110,7 @@ function Friends(props) {
                               <span className='orange-clr' >You pay</span>
                               <p className='orange-clr' >&#8377;{item.balance * -1}</p> 
                             </div>
-                            <button className='btn-orange-clr' style={{'border': 'none','height': '10%','alignSelf': 'end'}} onClick={()=>SettleAmount(item.name, item.balance)} >Settle</button>
+                            <button className='btn-orange-clr' style={{'border': 'none','height': '10%','alignSelf': 'end'}} onClick={()=>SettleAmount(item.id, item.name, item.balance)} >Settle</button>
                           </div>
                         ) 
                         : (item.balance > 0) ?
